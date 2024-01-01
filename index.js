@@ -1,12 +1,13 @@
 const express = require('express');
 const { exec } = require('child_process');
+// const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
-
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // const addDoubles = require('./addDoubles.js');
@@ -20,6 +21,11 @@ app.post('/run', (req, res) => {
         res.send(`Output: ${stdout}`);
     });
 });
+
+
+
+
+
 
 const port = process.env.PORT || 3000;
 
