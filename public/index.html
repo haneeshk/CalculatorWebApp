@@ -2,6 +2,9 @@
 <html>
 <head>
     <script src="javascript/addDoublesEmscripten.js"></script>    
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+    </style>
 </head>
 <body>
     <form action="/run" method="post">
@@ -9,7 +12,7 @@
         <input type="submit" value="Run">
     </form>
     <div id="output"></div>
-    <div id="output2"></div>
+    
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     
@@ -26,16 +29,25 @@
     </script>
 
 
-
+<section>
+    <h1>You can two numbers in this section</h1>
+    <p>The following calculation is being performed using a emscripten compiled c -program </p>
 <form id="myForm">
-    <input type="text" id="myInput"/>
+    <input type="text" id="myInput1" placeholder="enter the first number here"/>
+    <br>
+    <input type="text" id="myInput2" placeholder="enter the second number here"/>
+    <br>
+    <input type="text" id="myInput3" placeholder="Compute Bessel J0"/>
     <input type="submit" value="Submit" />
   </form>
   
-  <div id="MyResult"></div>
+  <!-- <div id="MyResult"></div> -->
+  <div id="output2"></div>
+  <div id="output3"></div>
+  
+</section>
   
   
-
 
   
   <script src="myScript.js"></script>

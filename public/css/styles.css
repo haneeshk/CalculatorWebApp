@@ -1,0 +1,27 @@
+form {
+    margin-left: 60px;
+    font-family: Consolas, monospace;
+}
+div {
+    margin-left: 60px;
+    font-family: Consolas, monospace;
+}
+section {
+    margin-left: 60px;
+    margin-bottom: 20px;
+    font-family: Consolas, monospace;
+}
+
+body {
+    font-family: Consolas, monospace;
+}
+
+input {
+    font-family: Consolas, monospace;
+    margin-bottom: 5px;
+}
+
+p {
+    font-family: Consolas, monospace;
+    margin-bottom: 20px;
+}
