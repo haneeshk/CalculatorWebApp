@@ -1,1 +1,1 @@
-web: node index.js
+web: gcc -o addDoubles add.c && node index.js

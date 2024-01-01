@@ -9,6 +9,8 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
+// const addDoubles = require('./addDoubles.js');
+
 app.post('/run', (req, res) => {
     exec(`./addDoubles ${req.body.input}`, (error, stdout, stderr) => {
         if (error) {
