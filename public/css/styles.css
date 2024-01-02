@@ -1,3 +1,11 @@
+.bar {
+    fill: steelblue;
+}
+.highlight {
+    fill: orange;
+}
+
+
 form {
     margin-left: 60px;
     font-family: Consolas, monospace;
@@ -8,12 +16,16 @@ div {
 }
 section {
     margin-left: 60px;
-    margin-bottom: 20px;
+    margin-right: 60px;
+    margin-bottom: 100px;
     font-family: Consolas, monospace;
+    
 }
 
 body {
+    margin-top: 100px;
     font-family: Consolas, monospace;
+    font-size: 12px;
 }
 
 input {

@@ -1,24 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="javascript/addDoublesEmscripten.js"></script>    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="/css/styles.css">
     <style>
     </style>
 </head>
 <body>
+    
+    
+
+    
+    
+    
+
+<section>
+    <hr>
+    <h1> Server side computation</h1>
     <form action="/run" method="post">
         <input type="text" name="input">
         <input type="submit" value="Run">
     </form>
     <div id="output"></div>
-    
-
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    
-    
-
-
     <script>
         $('form').on('submit', function (e) {
             e.preventDefault();
@@ -27,22 +34,36 @@
             });
         });
     </script>
-
+</section>
 
 <section>
+    <hr>
     <h1>You can two numbers in this section</h1>
     <p>The following calculation is being performed using a emscripten compiled c -program </p>
 <form id="myForm">
     <input type="text" id="myInput1" placeholder="enter the first number here"/>
     <br>
     <input type="text" id="myInput2" placeholder="enter the second number here"/>
-    <br>
-    <input type="text" id="myInput3" placeholder="Compute Bessel J0"/>
     <input type="submit" value="Submit" />
   </form>
   
-  <!-- <div id="MyResult"></div> -->
   <div id="output2"></div>
+</section>
+
+
+<section>
+    <hr>
+    <h1>Bessel J</h1>
+    <p>Compute the value of Bessel, \(J_0(x) \) using emscripten compiled c code </p>
+<form id="myForm2">
+    <input type="text" id="myInput3" placeholder="Compute Bessel J0"/>
+    <input type="submit" value="Submit" />
+  </form>
+
+
+
+  <!-- <div id="MyResult"></div> -->
+  
   <div id="output3"></div>
   
 </section>
@@ -51,6 +72,13 @@
 
   
   <script src="myScript.js"></script>
+
+
+<div id="besselplot"><plot>
+
+
+
+  
 </body>
 </html>
 
