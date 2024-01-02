@@ -37,3 +37,17 @@ p {
     font-family: Consolas, monospace;
     margin-bottom: 20px;
 }
+
+.myStyle {
+    /* Add your styles here. For example: */
+    background-color:white;
+    border: none;
+    color: rgb(73, 180, 218);
+    padding: 15px 32px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
