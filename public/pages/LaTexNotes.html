@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../javascript/common.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>Latex Notes</title>
+    <title>Latex Notes</title>
+    <script>
+
+
+        function appendText() {
+            var inputTextArea = document.getElementById('inputText');
+            var inputText = inputTextArea.value;
+            var cursorPosition = inputTextArea.selectionStart;
+            var textBeforeCursor = inputText.substring(0, cursorPosition);
+            var textAfterCursor = inputText.substring(cursorPosition);
+            var markedText = textBeforeCursor + '<span class="blink">\u2199</span>' + textAfterCursor;  // Insert marker
+            markedText = markedText.replace(/\$(.+?)\$/g, "\\($1\\)");
+            var paragraph = document.getElementById('paragraph');
+            paragraph.innerHTML = markedText;
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typeset();
+            } else {
+                // If MathJax is not defined, wait until it is
+                var checkInterval = setInterval(function () {
+                    if (typeof MathJax !== 'undefined') {
+                        clearInterval(checkInterval);
+                        MathJax.typeset();
+                    }
+                }, 100);  // Check every 100 milliseconds
+            }
+            // inputText = inputText.replace(/\$(.+?)\$/g, "\\($1\\)");
+            localStorage.setItem('text', inputText);
+
+        }
+
+
+        window.onload = function () {
+            var inputText = document.getElementById('inputText');
+            inputText.addEventListener('keyup', function (event) {
+                if (event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                    // event.preventDefault();  // Prevent the default action (new line)
+                    appendText();  // Call the function associated with the button
+                }
+            });
+        };
+
+        function editText() {
+            var inputText = document.getElementById('inputText').value;
+            var paragraph = document.getElementById('paragraph');
+            paragraph.innerHTML = paragraph.innerHTML.replace(/\\(.+?)\\/, "\\(" + inputText + "\\)");
+            MathJax.typeset();
+        }
+
+
+        function loadText() {
+            var savedText = localStorage.getItem('text');
+            if (savedText) {
+                document.getElementById('inputText').value = savedText;
+                replaceText();
+            }
+        }
+        function replaceText() {
+            var inputText = document.getElementById('inputText').value;
+            inputText = inputText.replace(/\$(.+?)\$/g, "\\($1\\)");
+            var paragraph = document.getElementById('paragraph');
+            paragraph.innerHTML = inputText;
+            MathJax.typeset();
+        }
+    </script>
+</head>
+
+<body onload="loadText()">
+    <h1>Welcome to Latex Notes</h1>
+    <!-- <textarea type="text" id="inputText" placeholder="Enter text here" oninput="this.size = this.value.length > 20 ? this.value.length : 20"> <br> -->
+    <textarea style="width: 300px;" id="inputText" rows="4" cols="50" placeholder="Enter text here"
+        oninput="appendText()"></textarea>
+    <button onclick="appendText()">Append Text</button><br>
+    <button onclick="editText()">Edit Text</button><br>
+    <button onclick="replaceText()">Replace Text</button><br>
+    <p id="paragraph" style="width: 500px;"></p>
+</body>
+
+</html>
