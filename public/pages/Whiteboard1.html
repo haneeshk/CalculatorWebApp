@@ -30,7 +30,7 @@ function moveCursor() {
             paragraph.innerHTML = markedText;
             
             // inputText = inputText.replace(/\$(.+?)\$/g, "\\($1\\)");
-            // localStorage.setItem('LatexNotesInputText', inputText);
+            // localStorage.setItem('text', inputText);
 
         }
 
@@ -65,7 +65,7 @@ function moveCursor() {
             
             
             // inputText = inputText.replace(/\$(.+?)\$/g, "\\($1\\)");
-             localStorage.setItem('LatexNotesInputText', inputText);
+             localStorage.setItem('text', inputText);
 
         }
 
@@ -82,7 +82,7 @@ function moveCursor() {
 
         function loadText() {
             console.log('loadText');
-            var savedText = localStorage.getItem('LatexNotesInputText');
+            var savedText = localStorage.getItem('text');
             console.log("going to echo savedText");
             console.log(savedText);
             // 
