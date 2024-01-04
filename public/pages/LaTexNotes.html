@@ -13,17 +13,45 @@
     <script>
 
 
-        function appendText() {
-            var inputTextArea = document.getElementById('inputText');
+
+function moveCursor() {
+    console.log('moveCursor');        
+    var inputTextArea = document.getElementById('inputText');
+            console.log(inputTextArea.value);
             var inputText = inputTextArea.value;
             var cursorPosition = inputTextArea.selectionStart;
             var textBeforeCursor = inputText.substring(0, cursorPosition);
+            // textBeforeCursor = textBeforeCursor.replace(/\n/g, "<br>");
             var textAfterCursor = inputText.substring(cursorPosition);
+            // textAfterCursor = textAfterCursor.replace(/\n/g, "<br>");
             var markedText = textBeforeCursor + '<span class="blink">\u2199</span>' + textAfterCursor;  // Insert marker
             markedText = markedText.replace(/\$(.+?)\$/g, "\\($1\\)");
             var paragraph = document.getElementById('paragraph');
             paragraph.innerHTML = markedText;
+            
+            // inputText = inputText.replace(/\$(.+?)\$/g, "\\($1\\)");
+            // localStorage.setItem('text', inputText);
+
+        }
+
+
+        function appendText() {
+            var inputTextArea = document.getElementById('inputText');
+            console.log(inputTextArea.value);
+            var inputText = inputTextArea.value;
+            var cursorPosition = inputTextArea.selectionStart;
+            var textBeforeCursor = inputText.substring(0, cursorPosition);
+            // textBeforeCursor = textBeforeCursor.replace(/\n/g, "<br>");
+            var textAfterCursor = inputText.substring(cursorPosition);
+            // textAfterCursor = textAfterCursor.replace(/\n/g, "<br>");
+            var markedText = textBeforeCursor + '<span class="blink">\u2199</span>' + textAfterCursor;  // Insert marker
+            markedText = markedText.replace(/\$(.+?)\$/g, "\\($1\\)");
+            var paragraph = document.getElementById('paragraph');
+            paragraph.innerHTML = markedText;
+            
+            // MathJax.typesetPromise([inputTextArea]);
             if (typeof MathJax !== 'undefined') {
+                console.log('MathJax defined');
                 MathJax.typeset();
             } else {
                 // If MathJax is not defined, wait until it is
@@ -34,22 +62,16 @@
                     }
                 }, 100);  // Check every 100 milliseconds
             }
+            
+            
             // inputText = inputText.replace(/\$(.+?)\$/g, "\\($1\\)");
-            localStorage.setItem('text', inputText);
+            // localStorage.setItem('text', inputText);
 
         }
 
+        
 
-        window.onload = function () {
-            var inputText = document.getElementById('inputText');
-            inputText.addEventListener('keyup', function (event) {
-                if (event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-                    // event.preventDefault();  // Prevent the default action (new line)
-                    appendText();  // Call the function associated with the button
-                }
-            });
-        };
-
+        
         function editText() {
             var inputText = document.getElementById('inputText').value;
             var paragraph = document.getElementById('paragraph');
@@ -59,17 +81,17 @@
 
 
         function loadText() {
-            var savedText = localStorage.getItem('text');
+            console.log('loadText');
+            var savedText = '';
+            // localStorage.getItem('text');
             if (savedText) {
                 document.getElementById('inputText').value = savedText;
-                replaceText();
+                appendText();
             }
         }
-        function replaceText() {
-            var inputText = document.getElementById('inputText').value;
-            inputText = inputText.replace(/\$(.+?)\$/g, "\\($1\\)");
-            var paragraph = document.getElementById('paragraph');
-            paragraph.innerHTML = inputText;
+        function clearText() {
+            document.getElementById('inputText').value='';
+            document.getElementById('paragraph').innerHTML='';
             MathJax.typeset();
         }
     </script>
@@ -77,13 +99,29 @@
 
 <body onload="loadText()">
     <h1>Welcome to Latex Notes</h1>
-    <!-- <textarea type="text" id="inputText" placeholder="Enter text here" oninput="this.size = this.value.length > 20 ? this.value.length : 20"> <br> -->
-    <textarea style="width: 300px;" id="inputText" rows="4" cols="50" placeholder="Enter text here"
+    <textarea class="latexinput" id="inputText" rows="4" cols="50" placeholder="Enter text here"
         oninput="appendText()"></textarea>
-    <button onclick="appendText()">Append Text</button><br>
-    <button onclick="editText()">Edit Text</button><br>
-    <button onclick="replaceText()">Replace Text</button><br>
-    <p id="paragraph" style="width: 500px;"></p>
-</body>
+    <p id="paragraph" class="latexoutput"></p>
 
+<script>
+window.onload = function () {
+            console.log('onload');
+            var inputText = document.getElementById('inputText');
+            
+            inputText.addEventListener('keyup', function (event) {
+                if (event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'ArrowDown' || event.key === 'ArrowUp') {  
+                    console.log('Arrow key pressed');
+                    console.log(this.value);
+                    appendText();  // Call the function associated with the button
+                }
+            });
+        };
+    </script>
+</body>
+<button onclick="MathJax.typeset()">Math Jax Typeset</button>
+<button onclick="clearText()">Clear Text</button>
 </html>
+
+
+    <!-- <button onclick="editText()">Edit Text</button><br> -->
+    

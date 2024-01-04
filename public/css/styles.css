@@ -38,6 +38,29 @@ p {
     margin-bottom: 20px;
 }
 
+
+p, .latexinput {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    width: 90vw;
+    max-width: 550px;
+    padding: 10px 50px 10px 20px;
+}
+
+
+
+p, .latexoutput {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    width: 90vw;
+    max-width: 550px;
+    padding: 10px 50px 10px 20px;
+}
+
 .myStyle {
     /* Add your styles here. For example: */
     background-color:white;
