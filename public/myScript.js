@@ -16,7 +16,7 @@ Module.onRuntimeInitialized = function() {
         var myFunction = Module.cwrap('addDoublesEmscripten', 'number', ['number', 'number']);
         var result1 = myFunction(inputValue1, inputValue2);
         document.getElementById('output2').textContent = result1;
-        console.log(result);  
+        console.log(result1);  
     });
 
 

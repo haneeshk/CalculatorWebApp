@@ -12,6 +12,23 @@
     <title>Latex Notes</title>
     <script>
 
+function saveData() {
+    console.log('saveData');
+    var inputTextArea = document.getElementById('inputText');
+    var inputText = inputTextArea.value;
+    console.log(inputText);
+    fetch('/save', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ inputTextToSave: inputText }) // Send the input text to the server
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+};
+
 
 
 function moveCursor() {
@@ -115,6 +132,7 @@ window.onload = function () {
             loadText();
             var inputText = document.getElementById('inputText');
             
+            
             inputText.addEventListener('keyup', function (event) {
                 if (event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'ArrowDown' || event.key === 'ArrowUp') {  
                     console.log('Arrow key pressed');
@@ -127,7 +145,7 @@ window.onload = function () {
         };
     </script>
 </body>
-<button onclick="MathJax.typeset()">Math Jax Typeset</button>
+<button onclick="saveData()">Save data</button>
 
 </html>
 
