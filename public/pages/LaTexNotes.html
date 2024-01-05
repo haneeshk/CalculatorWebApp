@@ -1,154 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <link rel="stylesheet" href="/css/styles.css">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="../javascript/common.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
     <title>Latex Notes</title>
     <title>Latex Notes</title>
     <script>
+      function saveData() {
+        console.log("going to be sending data to database");
+        var inputTextArea = document.getElementById("inputText");
+        var inputText = inputTextArea.value;
+        console.log(inputText);
+        fetch("/saveDataToDataBaseRoute", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ inputTextToSave: inputText }), // Send the input text to the server
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.error("Error:", error));
+      }
 
-function saveData() {
-    console.log('saveData');
-    var inputTextArea = document.getElementById('inputText');
-    var inputText = inputTextArea.value;
-    console.log(inputText);
-    fetch('/save', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ inputTextToSave: inputText }) // Send the input text to the server
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error));
-};
+      function moveCursor() {
+        console.log("moveCursor");
+        var inputTextArea = document.getElementById("inputText");
+        console.log(inputTextArea.value);
+        var inputText = inputTextArea.value;
+        var cursorPosition = inputTextArea.selectionStart;
+        var textBeforeCursor = inputText.substring(0, cursorPosition);
+        // textBeforeCursor = textBeforeCursor.replace(/\n/g, "<br>");
+        var textAfterCursor = inputText.substring(cursorPosition);
+        // textAfterCursor = textAfterCursor.replace(/\n/g, "<br>");
+        var markedText =
+          textBeforeCursor +
+          '<span class="blink">\u2199</span>' +
+          textAfterCursor; // Insert marker
+        markedText = markedText.replace(/\$(.+?)\$/g, "\\($1\\)");
+        var paragraph = document.getElementById("paragraph");
+        paragraph.innerHTML = markedText;
+      }
 
+      function appendText() {
+        var inputTextArea = document.getElementById("inputText");
+        console.log(inputTextArea.value);
+        var inputText = inputTextArea.value;
+        var cursorPosition = inputTextArea.selectionStart;
+        var textBeforeCursor = inputText.substring(0, cursorPosition);
+        // textBeforeCursor = textBeforeCursor.replace(/\n/g, "<br>");
+        var textAfterCursor = inputText.substring(cursorPosition);
+        // textAfterCursor = textAfterCursor.replace(/\n/g, "<br>");
+        var markedText =
+          textBeforeCursor +
+          '<span class="blink">\u2199</span>' +
+          textAfterCursor; // Insert marker
+        markedText = markedText.replace(/\$(.+?)\$/g, "\\($1\\)");
+        var paragraph = document.getElementById("paragraph");
+        paragraph.innerHTML = markedText;
 
-
-function moveCursor() {
-    console.log('moveCursor');        
-    var inputTextArea = document.getElementById('inputText');
-            console.log(inputTextArea.value);
-            var inputText = inputTextArea.value;
-            var cursorPosition = inputTextArea.selectionStart;
-            var textBeforeCursor = inputText.substring(0, cursorPosition);
-            // textBeforeCursor = textBeforeCursor.replace(/\n/g, "<br>");
-            var textAfterCursor = inputText.substring(cursorPosition);
-            // textAfterCursor = textAfterCursor.replace(/\n/g, "<br>");
-            var markedText = textBeforeCursor + '<span class="blink">\u2199</span>' + textAfterCursor;  // Insert marker
-            markedText = markedText.replace(/\$(.+?)\$/g, "\\($1\\)");
-            var paragraph = document.getElementById('paragraph');
-            paragraph.innerHTML = markedText;
-            
-            // inputText = inputText.replace(/\$(.+?)\$/g, "\\($1\\)");
-            // localStorage.setItem('LatexNotesInputText', inputText);
-
-        }
-
-
-        function appendText() {
-            var inputTextArea = document.getElementById('inputText');
-            console.log(inputTextArea.value);
-            var inputText = inputTextArea.value;
-            var cursorPosition = inputTextArea.selectionStart;
-            var textBeforeCursor = inputText.substring(0, cursorPosition);
-            // textBeforeCursor = textBeforeCursor.replace(/\n/g, "<br>");
-            var textAfterCursor = inputText.substring(cursorPosition);
-            // textAfterCursor = textAfterCursor.replace(/\n/g, "<br>");
-            var markedText = textBeforeCursor + '<span class="blink">\u2199</span>' + textAfterCursor;  // Insert marker
-            markedText = markedText.replace(/\$(.+?)\$/g, "\\($1\\)");
-            var paragraph = document.getElementById('paragraph');
-            paragraph.innerHTML = markedText;
-            
-            // MathJax.typesetPromise([inputTextArea]);
-            if (typeof MathJax !== 'undefined') {
-                console.log('MathJax defined');
-                MathJax.typeset();
-            } else {
-                // If MathJax is not defined, wait until it is
-                var checkInterval = setInterval(function () {
-                    if (typeof MathJax !== 'undefined') {
-                        clearInterval(checkInterval);
-                        MathJax.typeset();
-                    }
-                }, 100);  // Check every 100 milliseconds
+        // MathJax.typesetPromise([inputTextArea]);
+        if (typeof MathJax !== "undefined") {
+          console.log("MathJax defined");
+          MathJax.typeset();
+        } else {
+          // If MathJax is not defined, wait until it is
+          var checkInterval = setInterval(function () {
+            if (typeof MathJax !== "undefined") {
+              clearInterval(checkInterval);
+              MathJax.typeset();
             }
-            
-            
-            // inputText = inputText.replace(/\$(.+?)\$/g, "\\($1\\)");
-             localStorage.setItem('LatexNotesInputText', inputText);
-
+          }, 100); // Check every 100 milliseconds
         }
 
-        
+        // inputText = inputText.replace(/\$(.+?)\$/g, "\\($1\\)");
+        localStorage.setItem("LatexNotesInputText", inputText);
+      }
 
-        
-        function editText() {
-            var inputText = document.getElementById('inputText').value;
-            var paragraph = document.getElementById('paragraph');
-            paragraph.innerHTML = paragraph.innerHTML.replace(/\\(.+?)\\/, "\\(" + inputText + "\\)");
-            MathJax.typeset();
-        }
+      function editText() {
+        var inputText = document.getElementById("inputText").value;
+        var paragraph = document.getElementById("paragraph");
+        paragraph.innerHTML = paragraph.innerHTML.replace(
+          /\\(.+?)\\/,
+          "\\(" + inputText + "\\)"
+        );
+        MathJax.typeset();
+      }
 
-
-        function loadText() {
-            console.log('loadText');
-            var savedText = localStorage.getItem('LatexNotesInputText');
-            console.log("going to echo savedText");
-            console.log(savedText);
-            // 
-            if (savedText) {
-                document.getElementById('inputText').value = savedText;
-                appendText();
-            }
+      function loadText() {
+        console.log("loadText");
+        var savedText = localStorage.getItem("LatexNotesInputText");
+        console.log("going to echo savedText");
+        console.log(savedText);
+        //
+        if (savedText) {
+          document.getElementById("inputText").value = savedText;
+          appendText();
         }
-        function clearText() {
-            document.getElementById('inputText').value='';
-            document.getElementById('paragraph').innerHTML='';
-            MathJax.typeset();
-        }
+      }
+      function clearText() {
+        document.getElementById("inputText").value = "";
+        document.getElementById("paragraph").innerHTML = "";
+        MathJax.typeset();
+      }
     </script>
-</head>
+  </head>
 
-<body onload="loadText()">
+  <body onload="loadText()">
     <h1>Welcome to Latex Notes</h1>
-    <br>
-    <br>
+    <br />
+    <br />
     <p id="paragraph" class="latexoutput"></p>
-    <textarea class="latexinput" id="inputText" rows="4" cols="50" placeholder="Enter text here"
-        oninput="appendText()"></textarea>
-    
+    <textarea
+      class="latexinput"
+      id="inputText"
+      rows="4"
+      cols="50"
+      placeholder="Enter text here"
+      oninput="appendText()"
+    ></textarea>
+
     <button onclick="clearText()" id="clearButton">Clear Text</button>
-<script>
-window.onload = function () {
-            
-            console.log('window has loaded');
-            loadText();
-            var inputText = document.getElementById('inputText');
-            
-            
-            inputText.addEventListener('keyup', function (event) {
-                if (event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'ArrowDown' || event.key === 'ArrowUp') {  
-                    console.log('Arrow key pressed');
-                    console.log(this.value);
-                    appendText();  // Call the function associated with the button
+    <button id="getDataFromDatabasemButton">Get String from data base</button>
+    <script>
+      window.onload = function () {
+        console.log("window has loaded");
+        loadText();
+        var inputText = document.getElementById("inputText");
+        document
+          .getElementById("getDataFromDatabasemButton")
+          .addEventListener("click", function () {
+            fetch("/getLaTexCodeStringFromDatabaseRoute")
+              .then((response) => response.text())
+              .then((data) => {
+                console.log("data from server");
+                if (data) {
+                  document.getElementById("inputText").value = data;
+                  appendText();
                 }
-            });
+                console.log(data);
+              })
+              .catch((error) => console.error("Error:", error));
+          });
 
-            document.getElementById('paragraph').scrollIntoView({behavior: "smooth"});
-        };
+        inputText.addEventListener("keyup", function (event) {
+          if (
+            event.key === "ArrowRight" ||
+            event.key === "ArrowLeft" ||
+            event.key === "ArrowDown" ||
+            event.key === "ArrowUp"
+          ) {
+            console.log("Arrow key pressed");
+            console.log(this.value);
+            appendText(); // Call the function associated with the button
+          }
+        });
+
+        document
+          .getElementById("paragraph")
+          .scrollIntoView({ behavior: "smooth" });
+      };
     </script>
-</body>
-<button onclick="saveData()">Save data</button>
-
+  </body>
+  <button onclick="saveData()">Save data</button>
 </html>
 
-
-    <!-- <button onclick="editText()">Edit Text</button><br> -->
-    
+<!-- <button onclick="editText()">Edit Text</button><br> -->
